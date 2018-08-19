@@ -161,7 +161,7 @@ describe('buildVariables', () => {
                     {}
                 )
             ).toEqual({
-                where: { id: 'post1'},
+                where:  { id: 'post1'},
             });
         });
     });

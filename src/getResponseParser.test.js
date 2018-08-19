@@ -106,7 +106,7 @@ const testListTypes = type => {
                         embeddedJson: { foo: 'bar' },
                     },
                 ],
-                total: { count: 100 },
+                total: { aggregate: {count: 100} },
             },
         };
 
