@@ -64,7 +64,7 @@ export default introspectionResults => (aorFetchType, resource) => response => {
     ) {
         return {
             data: response.data.items.map(sanitize),
-            total: response.data.total.count,
+            total: response.data.total.aggregate.count,
         };
     }
 
