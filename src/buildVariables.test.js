@@ -14,7 +14,7 @@ describe('buildVariables', () => {
             const introspectionResult = {
                 types: [
                     {
-                        name: 'PostFilter',
+                        name: 'PostWhereInput',
                         inputFields: [{ name: 'tags_some' }],
                     },
                 ],
@@ -38,7 +38,7 @@ describe('buildVariables', () => {
                     {}
                 )
             ).toEqual({
-                filter: {
+                where: {
                     id_in: ['foo1', 'foo2'],
                     tags_some: { id_in: ['tag1', 'tag2'] },
                     author: { id: 'author1' },
@@ -121,7 +121,7 @@ describe('buildVariables', () => {
                     {}
                 )
             ).toEqual({
-                filter: { id_in: ['tag1', 'tag2'] },
+                where: { id_in: ['tag1', 'tag2'] },
             });
         });
     });
@@ -141,11 +141,12 @@ describe('buildVariables', () => {
                     {}
                 )
             ).toEqual({
-                filter: { author: { id: 'author1' } },
+                where: { author: { id: 'author1' } },
             });
         });
     });
 
+    // 
     describe('DELETE', () => {
         it('returns correct variables', () => {
             const params = {
@@ -160,7 +161,7 @@ describe('buildVariables', () => {
                     {}
                 )
             ).toEqual({
-                id: 'post1',
+                where:  { id: 'post1'},
             });
         });
     });
