@@ -1,11 +1,24 @@
 import merge from 'lodash/merge';
-import buildDataProvider from 'ra-data-graphql';
+import x from 'ra-data-graphql';
 import { DELETE, DELETE_MANY, UPDATE, UPDATE_MANY } from 'react-admin';
 
 import buildQuery from './buildQuery';
 
 const defaultOptions = {
     buildQuery,
+    introspection: {
+        operationNames: {
+          [GET_LIST]: resource => {
+              return `${resource.name.toLowerCase()}s`
+          },
+          [GET_ONE]: resource => `${resource.name.toLowerCase()}`,
+          [GET_MANY]: resource => `${resource.name.toLowerCase()}s`,
+          [GET_MANY_REFERENCE]: resource => `${resource.name.toLowerCase()}s`,
+          [CREATE]: resource => `create${resource.name}`,
+          [UPDATE]: resource => `update${resource.name}`,
+          [DELETE]: resource => `delete${resource.name}`
+        },
+      }
 };
 
 export default options => {
