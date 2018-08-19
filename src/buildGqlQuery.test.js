@@ -195,7 +195,7 @@ describe('buildGqlQuery', () => {
                 params
             )
         ).toEqual(
-            'query allCommand($foo:Int!){items:allCommand(foo:$foo){foo,linked{foo},resource{id}},total:_allCommandMeta(foo:$foo){count}}'
+            'query allCommand($foo:Int!){items:allCommand(foo:$foo){foo,linked{foo},resource{id}},total:allCommandConnection(foo:$foo){aggregate{count}}}'
         );
     });
     it('returns the correct query for GET_MANY', () => {
@@ -207,7 +207,7 @@ describe('buildGqlQuery', () => {
                 params
             )
         ).toEqual(
-            'query allCommand($foo:Int!){items:allCommand(foo:$foo){foo,linked{foo},resource{id}},total:_allCommandMeta(foo:$foo){count}}'
+            'query allCommand($foo:Int!){items:allCommand(foo:$foo){foo,linked{foo},resource{id}},total:allCommandConnection(foo:$foo){aggregate{count}}}'
         );
     });
     it('returns the correct query for GET_MANY_REFERENCE', () => {
@@ -219,7 +219,7 @@ describe('buildGqlQuery', () => {
                 params
             )
         ).toEqual(
-            'query allCommand($foo:Int!){items:allCommand(foo:$foo){foo,linked{foo},resource{id}},total:_allCommandMeta(foo:$foo){count}}'
+            'query allCommand($foo:Int!){items:allCommand(foo:$foo){foo,linked{foo},resource{id}},total:allCommandConnection(foo:$foo){aggregate{count}}}'
         );
     });
     it('returns the correct query for GET_ONE', () => {
