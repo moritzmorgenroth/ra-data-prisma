@@ -116,9 +116,13 @@ export default introspectionResults => (
                     fields,
                 },
                 total: {
-                    field: `_${queryType.name}Meta`,
+                    field: `${queryType.name}Connection`,
                     params: args,
-                    fields: { count: {} },
+                    fields: { 
+                        aggregate: { 
+                            fields: { count: {}}
+                        } 
+                    },
                 },
             },
         });
