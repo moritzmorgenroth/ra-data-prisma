@@ -135,13 +135,13 @@ export default introspectionResults => (
         }
         case GET_MANY:
             return {
-                filter: { id_in: params.ids },
+                where: { id_in: params.ids },
             };
         case GET_MANY_REFERENCE: {
             const parts = params.target.split('.');
 
             return {
-                filter: { [parts[0]]: { id: params.id } },
+                where: { [parts[0]]: { id: params.id } },
             };
         }
         case GET_ONE:
@@ -168,7 +168,9 @@ export default introspectionResults => (
 
         case DELETE:
             return {
-                id: params.id,
+                where:{
+                    id: params.id,
+                }
             };
     }
 };
