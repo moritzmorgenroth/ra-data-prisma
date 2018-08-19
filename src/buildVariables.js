@@ -20,7 +20,7 @@ const buildGetListVariables = introspectionResults => (
 
         if (typeof params.filter[key] === 'object') {
             const type = introspectionResults.types.find(
-                t => t.name === `${resource.type.name}Filter`
+                t => t.name === `${resource.type.name}WhereInput`
             );
             const filterSome = type.inputFields.find(
                 t => t.name === `${key}_some`
@@ -43,7 +43,7 @@ const buildGetListVariables = introspectionResults => (
         if (parts.length > 1) {
             if (parts[1] == 'id') {
                 const type = introspectionResults.types.find(
-                    t => t.name === `${resource.type.name}Filter`
+                    t => t.name === `${resource.type.name}WhereInput`
                 );
                 const filterSome = type.inputFields.find(
                     t => t.name === `${parts[0]}_some`
@@ -79,7 +79,7 @@ const buildGetListVariables = introspectionResults => (
         ),
         first: parseInt(params.pagination.perPage),
         orderBy: `${params.sort.field}_${params.sort.order}`,
-        filter,
+        where: filter,
     };
 };
 
@@ -146,7 +146,9 @@ export default introspectionResults => (
         }
         case GET_ONE:
             return {
-                id: params.id,
+                where:{
+                    id: params.id,
+                }
             };
         case UPDATE: {
             return buildCreateUpdateVariables(introspectionResults)(
