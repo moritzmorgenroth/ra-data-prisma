@@ -1,4 +1,4 @@
-import { GET_LIST, GET_MANY, GET_MANY_REFERENCE, DELETE } from 'react-admin';
+import { GET_LIST, GET_MANY, GET_MANY_REFERENCE, DELETE, CREATE, UPDATE } from 'react-admin';
 import { QUERY_TYPES } from 'ra-data-graphql';
 import { TypeKind } from 'graphql';
 
@@ -57,7 +57,7 @@ export const getArgType = arg => {
     }`;
 };
 
-export const buildArgs = (query, variables) => {
+export const buildArgs = (query, variables, inputType) => {
     if (query.args.length === 0) {
         return {};
     }
@@ -65,7 +65,7 @@ export const buildArgs = (query, variables) => {
     const validVariables = Object.keys(variables).filter(
         k => typeof variables[k] !== 'undefined'
     );
-    let args = query.args
+    let args = inputType.inputFields
         .filter(a => validVariables.includes(a.name))
         .reduce(
             (acc, arg) => ({ ...acc, [`${arg.name}`]: `$${arg.name}` }),
@@ -75,7 +75,7 @@ export const buildArgs = (query, variables) => {
     return args;
 };
 
-export const buildApolloArgs = (query, variables) => {
+export const buildApolloArgs = (query, variables, inputType) => {
     if (query.args.length === 0) {
         return {};
     }
@@ -84,7 +84,7 @@ export const buildApolloArgs = (query, variables) => {
         k => typeof variables[k] !== 'undefined'
     );
 
-    let args = query.args
+    let args = inputType.inputFields
         .filter(a => validVariables.includes(a.name))
         .reduce((acc, arg) => {
             return { ...acc, [`$${arg.name}`]: getArgType(arg) };
@@ -92,6 +92,17 @@ export const buildApolloArgs = (query, variables) => {
 
     return args;
 };
+export const getInputObjectForType = (introspectionResults, type, aorFetchType) => {
+    const typeName = type.name; 
+    let argName;
+    if(aorFetchType === CREATE){
+        argName = `${typeName}CreateInput`
+    }
+    if(aorFetchType === UPDATE){
+        argName = `${typeName}UpdateInput`
+    }
+    return introspectionResults.types.find(arg => arg.name === argName);
+}
 
 export default introspectionResults => (
     resource,
@@ -99,8 +110,9 @@ export default introspectionResults => (
     queryType,
     variables
 ) => {
-    const apolloArgs = buildApolloArgs(queryType, variables);
-    const args = buildArgs(queryType, variables);
+    const inputType = getInputObjectForType(introspectionResults, resource.type, aorFetchType);
+    const apolloArgs = buildApolloArgs(queryType, variables, inputType);
+    const args = buildArgs(queryType, variables, inputType);
     const fields = buildFields(introspectionResults)(resource.type.fields);
     if (
         aorFetchType === GET_LIST ||
@@ -130,6 +142,7 @@ export default introspectionResults => (
         return result;
     }
 
+
     if (aorFetchType === DELETE) {
         return encodeMutation(queryType.name, {
             params: apolloArgs,
@@ -142,13 +155,13 @@ export default introspectionResults => (
             },
         });
     }
-
+    console.log(args);
     const query = {
         params: apolloArgs,
         fields: {
             data: {
                 field: queryType.name,
-                params: args,
+                params: {data: args},
                 fields,
             },
         },
@@ -157,6 +170,7 @@ export default introspectionResults => (
     const result = QUERY_TYPES.includes(aorFetchType)
         ? encodeQuery(queryType.name, query)
         : encodeMutation(queryType.name, query);
-
+    console.log(result);
+    
     return result;
 };
