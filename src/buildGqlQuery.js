@@ -155,7 +155,6 @@ export default introspectionResults => (
             },
         });
     }
-    console.log(args);
     const query = {
         params: apolloArgs,
         fields: {
@@ -170,7 +169,6 @@ export default introspectionResults => (
     const result = QUERY_TYPES.includes(aorFetchType)
         ? encodeQuery(queryType.name, query)
         : encodeMutation(queryType.name, query);
-    console.log(result);
     
     return result;
 };
