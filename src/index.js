@@ -1,6 +1,6 @@
 import merge from 'lodash/merge';
 import buildDataProvider from 'ra-data-graphql';
-import { DELETE, DELETE_MANY, UPDATE, UPDATE_MANY } from 'react-admin';
+import { DELETE, DELETE_MANY, UPDATE, UPDATE_MANY, GET_LIST, GET_ONE, GET_MANY, GET_MANY_REFERENCE, CREATE} from 'react-admin';
 
 import buildQuery from './buildQuery';
 
