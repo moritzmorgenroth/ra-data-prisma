@@ -1,6 +1,6 @@
 {
   "name": "ra-data-prisma",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "A Prisma data provider for react-admin",
   "main": "./lib/index.js",
   "repository": {
