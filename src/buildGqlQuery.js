@@ -16,7 +16,7 @@ export const buildFields = introspectionResults => fields =>
         }
 
         if (type.kind !== TypeKind.OBJECT) {
-            return { ...acc, [field.name]: {} };
+            return { ...acc, [field.name]: { id: {} } };
         }
 
         const linkedResource = introspectionResults.resources.find(
@@ -35,9 +35,10 @@ export const buildFields = introspectionResults => fields =>
             return {
                 ...acc,
                 [field.name]: {
-                    fields: buildFields(introspectionResults)(
-                        linkedType.fields
-                    ),
+                    // fields: buildFields(introspectionResults)(
+                    //     linkedType.fields
+                    // ),
+                    id:{}
                 },
             };
         }
@@ -65,13 +66,22 @@ export const buildArgs = (query, variables, inputType) => {
     const validVariables = Object.keys(variables).filter(
         k => typeof variables[k] !== 'undefined'
     );
-    let args = inputType.inputFields
+    let args; 
+    if(inputType){
+    args = inputType.inputFields
         .filter(a => validVariables.includes(a.name))
         .reduce(
             (acc, arg) => ({ ...acc, [`${arg.name}`]: `$${arg.name}` }),
             {}
         );
-
+    }else{
+        args = query.args
+        .filter(a => validVariables.includes(a.name))
+        .reduce(
+            (acc, arg) => ({ ...acc, [`${arg.name}`]: `$${arg.name}` }),
+            {}
+        );
+    }
     return args;
 };
 
@@ -84,11 +94,21 @@ export const buildApolloArgs = (query, variables, inputType) => {
         k => typeof variables[k] !== 'undefined'
     );
 
-    let args = inputType.inputFields
+    let args; 
+    if(inputType){
+        args = inputType.inputFields
         .filter(a => validVariables.includes(a.name))
         .reduce((acc, arg) => {
             return { ...acc, [`$${arg.name}`]: getArgType(arg) };
         }, {});
+    }
+    else{
+        args = query.args
+        .filter(a => validVariables.includes(a.name))
+        .reduce((acc, arg) => {
+            return { ...acc, [`$${arg.name}`]: getArgType(arg) };
+        }, {});
+    }
 
     return args;
 };
