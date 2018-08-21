@@ -31,7 +31,7 @@
   "dependencies": {
     "graphql-tag": "^2.6.1",
     "lodash": "~4.17.5",
-    "pluralize": "~7.0.0",
+    "pluralize": "^7.0.0",
     "ra-data-graphql": "^2.2.0"
   },
   "peerDependencies": {

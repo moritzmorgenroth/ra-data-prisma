@@ -1,6 +1,8 @@
 import merge from 'lodash/merge';
 import buildDataProvider from 'ra-data-graphql';
 import { DELETE, DELETE_MANY, UPDATE, UPDATE_MANY, GET_LIST, GET_ONE, GET_MANY, GET_MANY_REFERENCE, CREATE} from 'react-admin';
+import camelCase from 'lodash/camelCase';
+import pluralize from 'pluralize'
 
 import buildQuery from './buildQuery';
 
@@ -21,11 +23,11 @@ const defaultOptions = {
     introspection: {
         operationNames: {
           [GET_LIST]: resource => {
-              return `${resource.name.toLowerCase()}s`
+              return `${pluralize(camelCase(resource.name))}`
           },
-          [GET_ONE]: resource => `${resource.name.toLowerCase()}`,
-          [GET_MANY]: resource => `${resource.name.toLowerCase()}s`,
-          [GET_MANY_REFERENCE]: resource => `${resource.name.toLowerCase()}s`,
+          [GET_ONE]: resource => `${camelCase(resource.name)}`,
+          [GET_MANY]: resource => `${pluralize(camelCase(resource.name))}`,
+          [GET_MANY_REFERENCE]: resource => `${pluralize(camelCase(resource.name))}`,
           [CREATE]: resource => `create${resource.name}`,
           [UPDATE]: resource => `update${resource.name}`,
           [DELETE]: resource => `delete${resource.name}`

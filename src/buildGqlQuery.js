@@ -135,6 +135,7 @@ export default introspectionResults => (
     const apolloArgs = buildApolloArgs(queryType, variables, inputType);
     const args = buildArgs(queryType, variables, inputType);
     const fields = buildFields(introspectionResults)(resource.type.fields);
+
     if (
         aorFetchType === GET_LIST ||
         aorFetchType === GET_MANY ||
@@ -187,6 +188,7 @@ export default introspectionResults => (
         },
     };
 
+    
     const result = QUERY_TYPES.includes(aorFetchType)
         ? encodeQuery(queryType.name, query)
         : encodeMutation(queryType.name, query);
