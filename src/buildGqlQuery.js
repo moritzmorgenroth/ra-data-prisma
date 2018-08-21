@@ -32,15 +32,16 @@ export const buildFields = introspectionResults => fields =>
         );
 
         if (linkedType) {
-            return {
-                ...acc,
-                [field.name]: {
-                    // fields: buildFields(introspectionResults)(
-                    //     linkedType.fields
-                    // ),
-                    id:{}
-                },
-            };
+            return { ...acc, [field.name]: { fields: { id: {} } } };
+            // return {
+            //     ...acc,
+            //     [field.name]: {
+            //         // fields: buildFields(introspectionResults)(
+            //         //     linkedType.fields
+            //         // ),
+            //         id:{}
+            //     },
+            // };
         }
 
         // NOTE: We might have to handle linked types which are not resources but will have to be careful about
