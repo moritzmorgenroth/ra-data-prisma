@@ -40,6 +40,8 @@ export const buildFields = introspectionResults => fields =>
     );
 
     if (linkedType) {
+      // This is a temporary workaround. Should be implemented proper knowing top level type later. 
+      
       return { ...acc, [field.name]: { fields: { id: {} } } };
       // return {
       //     ...acc,
