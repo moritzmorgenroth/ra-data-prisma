@@ -151,12 +151,12 @@ export default introspectionResults => (
                 }
             };
         case UPDATE: {
-            return buildCreateUpdateVariables(introspectionResults)(
+            return { ...buildCreateUpdateVariables(introspectionResults)(
                 resource,
                 aorFetchType,
                 params,
                 queryType
-            );
+            ), id: params.id};
         }
 
         case CREATE: {

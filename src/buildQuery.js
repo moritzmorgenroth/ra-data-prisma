@@ -33,6 +33,7 @@ export const buildQueryFactory = (
             );
         }
 
+        
         const variables = buildVariablesImpl(introspectionResults)(
             resource,
             aorFetchType,
