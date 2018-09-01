@@ -15,8 +15,8 @@ import getFinalType from "./getFinalType";
 import isList from "./isList";
 import isRequired from "./isRequired";
 
-export const buildFields = introspectionResults => fields =>
-  fields.reduce((acc, field) => {
+export const buildFields = introspectionResults => (type) =>
+  type.fields.reduce((acc, field) => {
     const type = getFinalType(field.type);
 
     if (type.name.startsWith("_")) {
@@ -41,17 +41,18 @@ export const buildFields = introspectionResults => fields =>
 
     if (linkedType) {
       // This is a temporary workaround. Should be implemented proper knowing top level type later. 
-      
-      return { ...acc, [field.name]: { fields: { id: {} } } };
-      // return {
-      //     ...acc,
-      //     [field.name]: {
-      //         // fields: buildFields(introspectionResults)(
-      //         //     linkedType.fields
-      //         // ),
-      //         id:{}
-      //     },
-      // };
+      // TEMP FIX: Breakout for reccuring types. 
+      // FIXME: Make maximum depth a configuration option. What is a depth that sense? Is this solution maybe already valid as a final approach?
+      if(linkedType.name === type.name)return { ...acc, [field.name]: { fields: { id: {} } } };
+      return {
+          ...acc,
+          [field.name]: {
+              fields: buildFields(introspectionResults)(
+                  linkedType.fields
+              ),
+              id:{}
+          },
+      };
     }
 
     // NOTE: We might have to handle linked types which are not resources but will have to be careful about
@@ -145,7 +146,7 @@ export default introspectionResults => (
   );
   const apolloArgs = buildApolloArgs(queryType, variables, inputType);
   const args = buildArgs(queryType, variables, inputType);
-  const fields = buildFields(introspectionResults)(resource.type.fields);
+  const fields = buildFields(introspectionResults)(resource.type);
 
   if (
     aorFetchType === GET_LIST ||
