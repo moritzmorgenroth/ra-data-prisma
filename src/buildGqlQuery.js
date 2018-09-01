@@ -200,6 +200,18 @@ export default introspectionResults => (
       }
     });
   }
+  if (aorFetchType === UPDATE) {
+    return encodeMutation(queryType.name, {
+      params: {...apolloArgs, "$id": "ID!"},
+      fields: {
+        data: {
+          field: queryType.name,
+          params: { data: args, where: {id: "$id"} },
+          fields
+        }
+      }
+    });
+  }
   const query = {
     params: apolloArgs,
     fields: {
