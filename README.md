@@ -26,7 +26,7 @@ Create your `react-admin` app and bootstrap the data provider like so:
 
 ```
 import { PostList, PostEdit, PostCreate } from './post';
-import buildPrismaProvider from "ra-data-prisma";
+import buildPrismaProvider from 'ra-data-prisma';
 
 class App extends Component {
     constructor() {
