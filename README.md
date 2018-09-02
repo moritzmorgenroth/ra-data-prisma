@@ -127,3 +127,9 @@ jest
 The test suite is currently rather thin. If you would like to contribute tests for nested types that would be great :)
 
 Glad about feedback & contributions!
+
+## More
+
+There is another work in progress ongoing: https://github.com/Weakky/ra-data-prisma
+
+Thanks for the feedback @Weakky! 
