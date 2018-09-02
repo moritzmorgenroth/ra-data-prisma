@@ -1,6 +1,6 @@
 {
   "name": "ra-data-prisma",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "A Prisma data provider for react-admin",
   "main": "./lib/index.js",
   "repository": {
@@ -44,7 +44,10 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "cross-env": "^5.2.0",
     "graphql": "^0.13.2",
+    "graphql-tag": "^2.6.1",
     "react-admin": "^2.2.0",
-    "rimraf": "^2.6.2"
+    "regenerator-runtime": "^0.12.1",
+    "rimraf": "^2.6.2",
+    "react": "^16.4.2"
   }
 }
