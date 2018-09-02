@@ -42,7 +42,7 @@ To include your local fork into a test project, add the library locally to your 
 ```json
 "dependencies": {
   "ra-data-prisma": "file:../path/to/your/fork/ra-data-prisma",
-  ...
+  //... your other dependencies
 }
 ```
 
