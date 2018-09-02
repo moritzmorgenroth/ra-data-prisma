@@ -1,6 +1,6 @@
 {
   "name": "ra-data-prisma",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "A Prisma data provider for react-admin",
   "main": "./lib/index.js",
   "repository": {
@@ -29,10 +29,10 @@
     "watch": "rimraf ./lib && cross-env NODE_ENV=production babel --watch ./src -d ./lib --ignore spec.js,test.js"
   },
   "dependencies": {
-    "graphql-tag": "^2.6.1",
-    "lodash": "~4.17.5",
+    "graphql-tag": "^2.9.2",
+    "lodash": "~4.17.10",
     "pluralize": "^7.0.0",
-    "ra-data-graphql": "^2.2.0"
+    "ra-data-graphql": "^2.2.3"
   },
   "peerDependencies": {
     "graphql": "^0.13.2",
@@ -43,9 +43,9 @@
     "babel-plugin-transform-es2015-destructuring": "^6.23.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "cross-env": "^5.2.0",
-    "graphql": "^0.13.2",
+    "graphql": "^14.0.0",
     "graphql-tag": "^2.6.1",
-    "react-admin": "^2.2.0",
+    "react-admin": "^2.2.3",
     "regenerator-runtime": "^0.12.1",
     "rimraf": "^2.6.2",
     "react": "^16.4.2"
