@@ -39,12 +39,13 @@ buildPrismaProvider({ client: myClient });
 
 To include your local fork into a test project, add the library locally to your projects `package.json`
 
-```json
+```
 "dependencies": {
   "ra-data-prisma": "file:../path/to/your/fork/ra-data-prisma",
-  //... your other dependencies
+  ... your other dependencies
 }
 ```
+and run `npm i`. For me, hot reloading works with my `react-admin` test app. 
 
 To have your changes in the source directory reflect in the lib, remember to build! 
 
