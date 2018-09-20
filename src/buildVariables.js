@@ -96,15 +96,16 @@ const buildCreateUpdateVariables = () => (
     }
 
     if (typeof params.data[key] === "object") {
-      //const arg = queryType.args.find(a => a.name === `${key}Id`);
+      const arg = queryType.args.find(a => a.name === key);
       // if (arg) {
       //     return {
       //         ...acc,
       //         [`${key}Id`]: params.data[key].id,
       //     };
       // }
-    
-      if (params.data[key].id) {
+      if(!arg) return acc; 
+
+      if (params.data[key] && params.data[key].id) {
           // CASE connect
         return {
           ...acc,
@@ -118,6 +119,12 @@ const buildCreateUpdateVariables = () => (
       }
     }
 
+    // Never return nested types as variables for now 
+    const parts = key.split(".");
+    if (parts.length > 1) {
+      return acc
+    }
+    
     return {
       ...acc,
       [key]: params.data[key]

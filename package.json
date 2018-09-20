@@ -31,7 +31,6 @@
   "dependencies": {
     "@material-ui/core": "^3.1.0",
     "graphql-tag": "^2.9.2",
-    "graphql": "^14.0.2",
     "lodash": "~4.17.11",
     "pluralize": "^7.0.0",
     "ra-data-graphql": "^2.3.1"
@@ -46,7 +45,6 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "cross-env": "^5.2.0",
     "graphql": "^14.0.2",
-    "graphql-tag": "^2.6.1",
     "react": "^16.5.2",
     "react-admin": "^2.3.1",
     "regenerator-runtime": "^0.12.1",
