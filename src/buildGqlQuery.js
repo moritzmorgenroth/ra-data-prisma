@@ -163,7 +163,7 @@ export default introspectionResults => (
         },
         total: {
           field: `${queryType.name}Connection`,
-          params: args,
+          params: { where: args.where},
           fields: {
             aggregate: {
               fields: { count: {} }
