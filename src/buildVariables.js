@@ -115,16 +115,26 @@ const buildCreateUpdateVariables = () => (
       else{
           // Assume CASE create
           // USE CREATE LOGIC!
-          // TODO Impelement
-      }
+          acc = {}; 
+          params.data[key].map(item => {
+            console.log(key, item)
+          })
+          // return {
+          //   ...acc,
+          //   [key]: { create: params.data[key].map(({ id }) => id)}
+          // };
+        }
     }
 
     // Never return nested types as variables for now 
     const parts = key.split(".");
     if (parts.length > 1) {
+      params.data[key].map(item => {
+        console.log(key, item)
+      })
       return acc
     }
-    
+
     return {
       ...acc,
       [key]: params.data[key]
