@@ -147,6 +147,8 @@ export default introspectionResults => (
   const args = buildArgs(queryType, variables, inputType);
   const fields = buildFields(introspectionResults)(resource.type);
 
+  console.log(variables)
+
   if (
     aorFetchType === GET_LIST ||
     aorFetchType === GET_MANY ||
@@ -211,6 +213,7 @@ export default introspectionResults => (
       }
     });
   }
+  console.log(args)
   const query = {
     params: apolloArgs,
     fields: {
