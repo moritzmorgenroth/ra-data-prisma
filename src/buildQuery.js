@@ -11,6 +11,9 @@ export const buildQueryFactory = (
     const knownResources = introspectionResults.resources.map(r => r.type.name);
 
     return (aorFetchType, resourceName, params) => {
+        
+        console.log(aorFetchType, resourceName, params);
+
         const resource = introspectionResults.resources.find(
             r => r.type.name === resourceName
         );
