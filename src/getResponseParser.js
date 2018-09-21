@@ -25,12 +25,22 @@ const sanitizeResource = (introspectionResults, resource) => data => {
             const linkedResourceData = data[field.name];
 
             if (Array.isArray(linkedResourceData)) {
+                // This was the original solution, creating an aditional ids field. In case of unexpected behavior, check if this is needed. 
+                // return {
+                //     ...acc,
+                //     [field.name]: data[field.name].map(
+                //         sanitizeResource(introspectionResults, linkedResource)
+                //     ),
+                //     [`${field.name}Ids`]: data[field.name].map(d => d.id),
+                // };
+
+                // Shorter, more elegant approach
+                
                 return {
                     ...acc,
                     [field.name]: data[field.name].map(
                         sanitizeResource(introspectionResults, linkedResource)
-                    ),
-                    [`${field.name}Ids`]: data[field.name].map(d => d.id),
+                    ).map(d => d.id),
                 };
             }
 
