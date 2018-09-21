@@ -15,8 +15,8 @@ import getFinalType from "./getFinalType";
 import isList from "./isList";
 import isRequired from "./isRequired";
 
-export const buildFields = introspectionResults => (type) =>
-  type.fields.reduce((acc, field) => {
+export const buildFields = introspectionResults => (parentType) =>
+  parentType.fields.reduce((acc, field) => {
     const type = getFinalType(field.type);
 
     if (type.name.startsWith("_")) {
@@ -43,15 +43,14 @@ export const buildFields = introspectionResults => (type) =>
       // This is a temporary workaround. Should be implemented proper knowing top level type later. 
       // TEMP FIX: Breakout for reccuring types. 
       // FIXME: Make maximum depth a configuration option. What is a depth that sense? Is this solution maybe already valid as a final approach?
-      if(linkedType.name === type.name)return { ...acc, [field.name]: { fields: { id: {} } } };
+      if(linkedType.name === parentType.name) return acc;
       return {
           ...acc,
           [field.name]: {
               fields: buildFields(introspectionResults)(
-                  linkedType.fields
+                  linkedType
               ),
-              id:{}
-          },
+          },  
       };
     }
 
