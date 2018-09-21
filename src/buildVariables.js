@@ -97,14 +97,11 @@ const buildCreateUpdateVariables = () => (
 
     if (typeof params.data[key] === "object") {
       const arg = queryType.args.find(a => a.name === key);
-      // if (arg) {
-      //     return {
-      //         ...acc,
-      //         [`${key}Id`]: params.data[key].id,
-      //     };
-      // }
-      if(!arg) return acc; 
 
+      // FIXME: any types are accepted here!
+      //if(!arg) return acc; 
+
+      console.log("Querytype args", queryType.args, params.data[key], key, resource)
       if (params.data[key] && params.data[key].id) {
           // CASE connect
         return {
@@ -113,16 +110,11 @@ const buildCreateUpdateVariables = () => (
         };
       }
       else{
-          // Assume CASE create
-          // USE CREATE LOGIC!
-          acc = {}; 
-          params.data[key].map(item => {
-            console.log(key, item)
-          })
-          // return {
-          //   ...acc,
-          //   [key]: { create: params.data[key].map(({ id }) => id)}
-          // };
+          return {
+            ...acc,
+            [key]: { create: params.data[key] }
+          };
+          
         }
     }
 
