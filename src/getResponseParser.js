@@ -34,8 +34,8 @@ const sanitizeResource = (introspectionResults, resource) => data => {
                 //     [`${field.name}Ids`]: data[field.name].map(d => d.id),
                 // };
 
-                // Shorter, elegant approach
-
+                // Shorter, more elegant approach
+                
                 return {
                     ...acc,
                     [field.name]: data[field.name].map(

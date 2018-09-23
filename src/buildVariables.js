@@ -84,11 +84,6 @@ const buildCreateUpdateVariables = () => (
   queryType
 ) =>
   Object.keys(params.data).reduce((acc, key) => {
-    // if (type.name.startsWith("_")) {
-    //   return acc;
-    // }
-    console.log("KEYVAL",params.data[key])
-    console.log("KEY",key)
     if (Array.isArray(params.data[key])) {
       const arg = queryType.args.find(a => a.name === `${key}Ids`);
 
