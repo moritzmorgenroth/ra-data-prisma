@@ -2,7 +2,8 @@
   "name": "ra-data-prisma",
   "version": "0.1.12",
   "description": "A Prisma data provider for react-admin",
-  "main": "./lib/index.js",
+  "main": "lib/index.js",
+  "module": "esm/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/moritzmorgenroth/ra-data-prisma"
@@ -25,7 +26,8 @@
   ],
   "license": "MIT",
   "scripts": {
-    "build": "rimraf ./lib && cross-env NODE_ENV=production babel --quiet ./src -d ./lib --ignore spec.js,test.js",
+    "build": "rimraf ./lib && cross-env NODE_ENV=production BABEL_ENV=cjs babel ./src -d ./lib --ignore spec.js,test.js",
+    "build-esm": "rimraf ./esm && cross-env NODE_ENV=production BABEL_ENV=esm babel ./src -d ./esm --ignore spec.js,test.js",
     "watch": "rimraf ./lib && cross-env NODE_ENV=production babel --watch ./src -d ./lib --ignore spec.js,test.js"
   },
   "dependencies": {
@@ -40,14 +42,15 @@
     "react-admin": "^2.2.0"
   },
   "devDependencies": {
-    "babel-cli": "~6.26.0",
-    "babel-plugin-transform-es2015-destructuring": "^6.23.0",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "@babel/cli": "^7.1.0",
+    "@babel/core": "^7.1.0",
+    "@babel/plugin-transform-destructuring": "^7.0.0",
+    "@babel/plugin-transform-spread": "^7.0.0",
+    "@babel/preset-env": "^7.1.0",
     "cross-env": "^5.2.0",
     "graphql": "^14.0.2",
     "react": "^16.5.2",
     "react-admin": "^2.3.1",
-    "regenerator-runtime": "^0.12.1",
     "rimraf": "^2.6.2"
   }
 }
