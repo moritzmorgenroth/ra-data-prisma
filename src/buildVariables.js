@@ -102,7 +102,7 @@ const buildCreateUpdateVariables = () => (
       //if(!arg) return acc;
 
       console.log("Querytype args", queryType.args, params.data[key], key, resource)
-      const objectKeys = Object.keys( params.previousData[key] );
+      const objectKeys = Object.keys( params.data[key] );
       if (params.data[key] && params.data[key].id && objectKeys.length === 1 ) {
           // CASE connect
         return {
