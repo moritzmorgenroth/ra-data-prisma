@@ -99,32 +99,60 @@ const buildCreateUpdateVariables = () => (
       const arg = queryType.args.find(a => a.name === key);
 
       // FIXME: any types are accepted here!
-      //if(!arg) return acc; 
+      //if(!arg) return acc;
 
       console.log("Querytype args", queryType.args, params.data[key], key, resource)
-      if (params.data[key] && params.data[key].id) {
+      const objectKeys = Object.keys( params.data[key] );
+      if (params.data[key] && params.data[key].id && objectKeys.length === 1 ) {
           // CASE connect
         return {
           ...acc,
           [key]: { connect: { id: params.data[key].id } }
         };
       }
+      else if ( params.data[key] && params.data[key].id && objectKeys.length > 1 ) {
+        // CASE update
+        // * This only takes care of 1 level down of nesting
+        // * Anything deeper it will just carry over
+
+        // Check if there is a difference. If there is no difference then we shouldn't include it
+        // If the object has another object or array of items don't include it
+        const updateObjectVariables = {};
+        for ( const [itemKey, itemValue] of Object.entries( params.data[key] ) ) {
+          if (Array.isArray(itemValue) || typeof itemValue === "object" ) { continue; }
+          if ( !itemKey.startsWith('__') && itemValue !== params.previousData[key][itemKey] ) {
+            updateObjectVariables[itemKey] = itemValue;
+          }
+        }
+
+        // Do not include data
+        if ( Object.keys( updateObjectVariables ).length == 0 ) {
+          return { ...acc };
+        }
+
+        return {
+          ...acc,
+          [key]: { update: updateObjectVariables },
+        }
+      }
       else{
           return {
             ...acc,
             [key]: { create: params.data[key] }
           };
-          
+
         }
     }
 
-    // Never return nested types as variables for now 
+    // Never return nested types as variables for now
     const parts = key.split(".");
     if (parts.length > 1) {
-      params.data[key].map(item => {
-        console.log(key, item)
-      })
-      return acc
+      if ( Array.isArray( params.data[key] ) ) {
+        params.data[key].map(item => {
+          console.log(key, item)
+        });
+      }
+      return acc;
     }
 
     return {
