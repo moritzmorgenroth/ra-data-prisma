@@ -99,7 +99,7 @@ const buildCreateUpdateVariables = () => (
       const arg = queryType.args.find(a => a.name === key);
 
       // FIXME: any types are accepted here!
-      //if(!arg) return acc; 
+      //if(!arg) return acc;
 
       console.log("Querytype args", queryType.args, params.data[key], key, resource)
       if (params.data[key] && params.data[key].id) {
@@ -114,17 +114,19 @@ const buildCreateUpdateVariables = () => (
             ...acc,
             [key]: { create: params.data[key] }
           };
-          
+
         }
     }
 
-    // Never return nested types as variables for now 
+    // Never return nested types as variables for now
     const parts = key.split(".");
     if (parts.length > 1) {
-      params.data[key].map(item => {
-        console.log(key, item)
-      })
-      return acc
+      if ( Array.isArray( params.data[key] ) ) {
+        params.data[key].map(item => {
+          console.log(key, item)
+        });
+      }
+      return acc;
     }
 
     return {
